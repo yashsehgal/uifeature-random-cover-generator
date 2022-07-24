@@ -8,7 +8,12 @@ ReactModal.setAppElement("#root");
 
 export default function CreateNewFiles() {
     const [createNewPopup, setCreateNewPopup] = useState(false);
-    const [invoiceList, setInvoiceList] = useState([]);
+    const [invoiceList, setInvoiceList] = useState([
+        {
+            title: 'Taxes',
+            styles: generateCoverStyle()
+        }
+    ]);
     return (
         <React.Fragment>
             <div className="create-new-files-section-wrapper m-16">
@@ -28,9 +33,9 @@ export default function CreateNewFiles() {
                         </button>
                     </span>
                 </div>
-                <div className="invoices-list-wrapper">
+                <div className="invoices-list-wrapper mt-6">
                     <h1 className="leading-snug text-zinc-500 font-semibold text-sm">Invoices</h1>
-                    <div className="invoices-cards-list-wrapper">
+                    <div className="invoices-cards-list-wrapper mt-4 grid grid-cols-5 items-center justify-start gap-4">
                         {invoiceList?.map((invoice, invoiceIndex) => {
                             return (
                                 <FileCard 
@@ -76,7 +81,9 @@ export default function CreateNewFiles() {
                         <input type="text" 
                             className="w-full h-fit px-4 py-2 rounded-md border border-transparent bg-white bg-opacity-30 placeholder:text-white placeholder:text-opacity-60 text-white font-semibold text-sm" 
                             placeholder="Eg. Monthly Purchases" 
-                            id="new-invoice-input" />
+                            id="new-invoice-input" 
+                            defaultValue={`${generateCoverStyle()?.prefix}-${generateCoverStyle()?.suffix}`}
+                            />
                     </div>
                     <div className="w-full mt-2 flex flex-row items-center justify-between">
                         <button className="px-4 py-2 rounded-md border border-transparent bg-white bg-opacity-30 hover:brightness-125 text-white font-semibold text-sm"
@@ -86,7 +93,7 @@ export default function CreateNewFiles() {
                         </button>
                         <button className="px-4 py-2 rounded-md border border-transparent bg-white hover:brightness-125 text-black font-semibold text-sm"
                             onClick={() => {
-                                if (!document.getElementById('new-invoice-input')?.value===null) {
+                                if (document.getElementById('new-invoice-input')?.value!==null && document.getElementById('new-invoice-input').value!=="") {
                                     let newInvoiceTitle = document.getElementById('new-invoice-input')?.value;
                                     let updatedInvoiceList = invoiceList;
                                     updatedInvoiceList.push({
@@ -95,6 +102,7 @@ export default function CreateNewFiles() {
                                     });
                                     setInvoiceList(updatedInvoiceList);
                                     setCreateNewPopup(false);
+                                    console.log('saving data...');
                                 }
                             }}
                         >
