@@ -95,13 +95,15 @@ export default function CreateNewFiles() {
                                 if (document.getElementById('new-invoice-input')?.value!==null && document.getElementById('new-invoice-input').value!=="") {
                                     let newInvoiceTitle = document.getElementById('new-invoice-input')?.value;
                                     let updatedInvoiceList = invoiceList;
+                                    let allInvoiceTitles = [];
+                                    invoiceList?.map((invoice) => allInvoiceTitles.push(invoice?.title));
+                                    
                                     updatedInvoiceList.push({
                                         title: newInvoiceTitle,
                                         styles: generateCoverStyle()
                                     });
                                     setInvoiceList(updatedInvoiceList);
                                     setCreateNewPopup(false);
-                                    console.log('saving data...');
                                 }
                             }}
                         >
