@@ -8,12 +8,8 @@ ReactModal.setAppElement("#root");
 
 export default function CreateNewFiles() {
     const [createNewPopup, setCreateNewPopup] = useState(false);
-    const [invoiceList, setInvoiceList] = useState([
-        {
-            title: 'Taxes',
-            styles: generateCoverStyle()
-        }
-    ]);
+    const [editInvoiceRef, setEditInvoice] = useState(false);
+    const [invoiceList, setInvoiceList] = useState([]);
     return (
         <React.Fragment>
             <div className="create-new-files-section-wrapper m-16">
@@ -23,8 +19,10 @@ export default function CreateNewFiles() {
                         className="w-[460px] h-fit px-4 py-2 rounded-md border border-transparent bg-zinc-800 placeholder:text-zinc-600 text-white font-semibold text-sm" 
                         placeholder="Search for invoices" />
                     <span className="buttons-wrapper flex flex-row items-center justify-end gap-2">
-                        <button className="px-4 py-2 rounded-md border border-transparent bg-zinc-700 hover:brightness-125 text-zinc-400 font-semibold text-sm">
-                            Edit invoices 
+                        <button className="px-4 py-2 rounded-md border border-transparent bg-zinc-700 hover:brightness-125 text-zinc-400 font-semibold text-sm"
+                            onClick={() => setEditInvoice(!editInvoiceRef)}
+                        >
+                            {editInvoiceRef ? "Save Changes" : "Edit invoices"} 
                         </button>
                         <button className="px-4 py-2 rounded-md border border-transparent bg-purple-700 hover:brightness-125 text-white font-semibold text-sm"
                             onClick={() => setCreateNewPopup(true)}
@@ -42,6 +40,7 @@ export default function CreateNewFiles() {
                                     key={invoiceIndex}
                                     title={invoice?.title}
                                     styles={invoice?.styles}
+                                    isEditable={editInvoiceRef}
                                 />
                             )
                         })}
